@@ -1,42 +1,41 @@
 return {
-	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons",
-		"folke/todo-comments.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-	},
-	config = function()
-		local telescope = require("telescope")
-		local actions = require("telescope.actions")
+  "nvim-telescope/telescope.nvim",
+  branch = "0.1.x",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "folke/todo-comments.nvim",
+  },
+  config = function()
+    local keymap = vim.keymap
+    local telescope = require("telescope")
+    local builtin = require("telescope.builtin")
+    local actions = require("telescope.actions")
 
-		telescope.setup({
-			defaults = {
-				path_display = { "smart" },
-				mappings = {
-					i = {
-						["<C-k>"] = actions.move_selection_previous,
-						["<C-j>"] = actions.move_selection_next,
-						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-					},
-				},
-			},
-		})
+    telescope.setup({
+      defaults = {
+        path_display = { "smart" },
+        mappings = {
+          i = {
+            ["<C-k>"] = actions.move_selection_previous,
+            ["<C-j>"] = actions.move_selection_next,
+          },
+        },
+        file_ignore_patterns = {
+          "node_modules",
+        },
+      },
+    })
 
-		telescope.load_extension("fzf")
+    telescope.load_extension("fzf")
 
-		local keymap = vim.keymap
-
-		keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Fuzzy find files in cwd" })
-		keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<CR>", { desc = "Fuzzy find recent files" })
-		keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<CR>", { desc = "Fuzzy find string in cwd" })
-		keymap.set(
-			"n",
-			"<leader>fc",
-			"<cmd>Telescope grep_string<CR>",
-			{ desc = "Fuzzy find string under cursor in cwd" }
-		)
-		keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Fuzzy find todos" })
-	end,
+    keymap.set("n", "<leader><space>", builtin.find_files, { desc = "Telescope find files" })
+    keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+    keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Telescope recent files" })
+    keymap.set("n", "<leader>fs", builtin.live_grep, { desc = "Telescope live grep" })
+    keymap.set("n", "<leader>fc", builtin.grep_string, { desc = "Telescope live grep current string" })
+    keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+    keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<CR>", { desc = "Telescope todos" })
+    keymap.set("n", "<leader>fk", "<cmd>Telescope keymaps<CR>", { desc = "Telescope keymaps" })
+  end,
 }

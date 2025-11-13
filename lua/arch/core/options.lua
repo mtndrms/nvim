@@ -4,20 +4,22 @@ local opt = vim.opt
 
 opt.relativenumber = true
 opt.number = true
+opt.wrap = false
+opt.cursorline = true
+opt.termguicolors = true
+opt.background = "dark"
+opt.signcolumn = "yes"
+opt.swapfile = false
 
--- Tabs & intentation
+-- Tabs & indentation
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.autoindent = true
 
-opt.wrap = false
-
--- Search settings
+-- Search
 opt.ignorecase = true
 opt.smartcase = true
-
-opt.cursorline = true
 
 -- Backspace
 opt.backspace = "indent,eol,start"
