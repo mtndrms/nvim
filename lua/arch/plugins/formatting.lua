@@ -14,7 +14,7 @@ return {
       },
       format_on_save = {
         lsp_fallback = true,
-        asycn = false,
+        async = false,
         timeout_ms = 100,
       },
     })
@@ -22,7 +22,7 @@ return {
     vim.keymap.set({ "n", "v" }, "<leader>mp", function()
       conform.format({
         lsp_fallback = true,
-        asycn = false,
+        async = false,
         timeout_ms = 100,
       })
     end, { desc = "Format file or selected text" })
